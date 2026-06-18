@@ -1,0 +1,5 @@
+node_modules/
+.env
+*.csv
+環境メモ（清和）.txt
+env.example
