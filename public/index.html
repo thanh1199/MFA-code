@@ -265,13 +265,25 @@ async function checkStatus() {
     } catch (e) {}
 }
 function goStep(n) {
+    if (n === 3) {
+        updateSelected();
+
+        if (selectedUserIds.size === 0) {
+            document.getElementById('searchError').innerHTML =
+                '<div class="alert alert-danger">ユーザを選択してください</div>';
+            n = 2;
+        }
+    }
+
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.getElementById('panel' + n).classList.add('active');
+
     document.querySelectorAll('.step-ind').forEach((s, i) => {
         s.classList.remove('active', 'done');
         if (i + 1 < n) s.classList.add('done');
         if (i + 1 === n) s.classList.add('active');
     });
+
     if (n === 3) {
         document.getElementById('genCounter').innerHTML = `
             <div class="counter-item"><div class="num">${selectedUserIds.size}</div><div class="lbl">対象ユーザ</div></div>
@@ -374,7 +386,30 @@ async function notifyTeams() {
         const data = await resp.json(); if (!resp.ok) throw new Error(data.error); alert('✅ Teams通知を送信しました');
     } catch (e) { alert('❌ Teams通知に失敗: ' + e.message); }
 }
-function reset() { selectedUserIds.clear(); generatedResults = []; goStep(2); }
+
+function reset() {
+    selectedUserIds.clear();
+    generatedResults = [];
+
+    document.getElementById('searchError').innerHTML = '';
+    document.getElementById('genError').innerHTML = '';
+
+    document.querySelectorAll('.user-chk').forEach(chk => chk.checked = false);
+    document.getElementById('chkAll').checked = false;
+    document.getElementById('selectedCount').textContent = '0名 選択中';
+
+    document.getElementById('progressWrap').style.display = 'none';
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('progressText').textContent = '0 / 0';
+
+    document.getElementById('resultCounter').innerHTML = '';
+    document.getElementById('resultTableBody').innerHTML = '';
+
+    document.getElementById('btnGenerate').disabled = false;
+    document.getElementById('btnGenerate').innerHTML = '🔐 発番実行';
+
+    goStep(2);
+}
 </script>
 </body>
 </html>

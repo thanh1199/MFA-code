@@ -3,3 +3,4 @@ node_modules/
 *.csv
 環境メモ（清和）.txt
 env.example
+.playwright-storage.json
