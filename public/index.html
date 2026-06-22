@@ -354,7 +354,9 @@ async function doGenerate() {
         generatedResults = data.results;
         document.getElementById('progressFill').style.width = '100%';
         document.getElementById('progressText').textContent = `${data.results.length} / ${data.results.length} 完了`;
-        renderResults(data); goStep(4);
+        renderResults(data);
+        goStep(4);
+        await notifyTeamsAuto();
     } catch (e) {
         document.getElementById('genError').innerHTML = `<div class="alert alert-danger">❌ ${e.message}</div>`;
     } finally { btn.disabled = false; btn.innerHTML = '🔐 発番実行'; }
@@ -385,6 +387,26 @@ async function notifyTeams() {
         const resp = await fetch('/api/notify-teams', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ results: generatedResults, webhookUrl: document.getElementById('teamsWebhook').value }) });
         const data = await resp.json(); if (!resp.ok) throw new Error(data.error); alert('✅ Teams通知を送信しました');
     } catch (e) { alert('❌ Teams通知に失敗: ' + e.message); }
+}
+async function notifyTeamsAuto() {
+    try {
+        const resp = await fetch('/api/notify-teams', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ results: generatedResults })
+        });
+
+        const data = await resp.json();
+
+        if (!resp.ok) {
+            console.warn('Teams自動通知に失敗:', data.error);
+            return;
+        }
+
+        console.log('Teams自動通知完了');
+    } catch (e) {
+        console.warn('Teams自動通知に失敗:', e.message);
+    }
 }
 
 function reset() {
