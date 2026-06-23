@@ -36,7 +36,7 @@ if exist .env (
     echo [OK] .env created from .env.example.
     echo [INFO] Edit .env to set your Salesforce Connected App credentials.
 )
-if not exist logs mkdir logs
+if not exist "%~dp0services\logs" mkdir "%~dp0services\logs"
 echo done > .setup-done
 echo.
 

@@ -35,20 +35,10 @@ echo.
 
 :skip_setup
 
-REM ---------------- .env check ----------------
-if exist .env goto :env_ok
-echo [SETUP] Creating .env file...
-if not exist .env.example goto :no_env_example
-copy .env.example .env >nul
-echo [INFO] Please edit .env with your Salesforce credentials.
-notepad .env
-echo.
-echo After editing .env, press any key to continue.
-pause
-:env_ok
+
 
 REM ---------------- logs dir ----------------
-if not exist logs mkdir logs
+if not exist "%~dp0services\logs" mkdir "%~dp0services\logs"
 
 REM ---------------- Port 3000 cleanup ----------------
 echo [CHECK] Checking port 3000...

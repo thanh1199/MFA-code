@@ -497,7 +497,7 @@ app.listen(PORT, async () => {
     }
 
     log(`Playwright UI自動化: ✅ 有効 (Headful モード = 画面表示)`);
-    log(`エラースクショ保存先: ./logs/`);
+    log(`エラースクショ保存先: ./services/logs/`);
     log('======================================');
     try { const open = (await import('open')).default; open(`http://localhost:${PORT}`); } catch (e) {}
 });
