@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.example
+runtime/
+logs/
+.playwright-storage.json
+services/.playwright-storage.json
+*.csv
+.setup-done

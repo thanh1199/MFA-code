@@ -1,0 +1,23 @@
+{
+  "name": "mfa-code-generator-auto",
+  "version": "4.0.0",
+  "description": "Salesforce MFA確認コード 自動発番ツール (Auto Mode / Playwright UI Automation)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "postinstall": "playwright install chromium"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2",
+    "express-session": "^1.17.3",
+    "jsforce": "^1.11.1",
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
+    "playwright": "^1.48.0",
+    "node-cron": "^3.0.3"
+  },
+  "author": "",
+  "license": "ISC"
+}
